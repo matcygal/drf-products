@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: python:3.9-alpine
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          command: |
+            docker-compose up -d
+      - run:
+          name: Running tests
+          command: |
+            docker-compose run alpine sh -c " python manage.py test "
+      - store_artifacts:
+          path: test-reports/
+          destination: python_app

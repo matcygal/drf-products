@@ -1,0 +1,8 @@
+version: "3.5"
+services:
+  alpine:
+    build:
+      context: .
+    command: "sh start.sh"
+    ports:
+      - "8000:8000"
